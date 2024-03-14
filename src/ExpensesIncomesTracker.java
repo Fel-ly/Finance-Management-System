@@ -38,7 +38,7 @@ public class ExpensesIncomesTracker extends JFrame {
         UIManager.put("Label.foreground", Color.WHITE);
 
         //set font
-        Font customFont = new Font("Arial", Font.BOLD,18);
+        Font customFont = new Font("Arial", Font.PLAIN,18);
         UIManager.put("Label.font", customFont);
         UIManager.put("TextField.font", customFont);
         UIManager.put("ComboBox.font", customFont);
@@ -97,13 +97,16 @@ public class ExpensesIncomesTracker extends JFrame {
 
     }
 
+    // method that handles addition of new entries to the table
     private void addEntry(){
+        //get input values from inout fields
         String date  = dateField.getText();
         String description = descriptionField.getText();
         String amountStr = amountField.getText();
         String type = (String) typeComboBox.getSelectedItem();
         double amount;
 
+        // validate amount input value
         if(amountStr.isEmpty()){
             JOptionPane.showMessageDialog(this,"Please Enter Amount", "Error:", JOptionPane.ERROR_MESSAGE);
             return;
@@ -117,16 +120,28 @@ public class ExpensesIncomesTracker extends JFrame {
             return;
         }
 
+        // set expenses as negative values
         if(type.equals("Expense")){
             amount *=-1;
         }
 
+        // create and add a new entry to the table
         ExpenseIncomeEntry entry = new ExpenseIncomeEntry(date, description, amount, type);
         tableModel.addEntry(entry);
+        // update balance to display new balance
         balance += amount;
         balanceLabel.setText("Balance: KES " +balance);
+
+        clearInputFields();
     }
 
+    // method to clear input fields for the next entry
+    private void clearInputFields(){
+        dateField.setText("");
+        descriptionField.setText("");
+        amountField.setText("");
+        typeComboBox.setSelectedIndex(0);
+    }
 
 
 }
