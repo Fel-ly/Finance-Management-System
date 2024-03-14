@@ -30,6 +30,11 @@ public class ExpenseIncomeTableModel extends AbstractTableModel {
     }
 
     @Override
+    public String getColumnName(int column)  {
+        return columnNames[column];
+    }
+
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ExpenseIncomeEntry entry = entries.get(rowIndex);
 
