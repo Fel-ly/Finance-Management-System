@@ -60,8 +60,8 @@ public class ExpensesIncomesTracker extends JFrame {
 
         //add actionListener to the "add" button to record new entry
         addButton = new JButton("Add");
-        //addButton.addActionListener(e-);
-        balanceLabel = new JLabel("Balance: Ksh." +balance);
+        addButton.addActionListener(e -> addEntry());
+        balanceLabel = new JLabel("Balance: KES " +balance);
 
         // create input panel to arrange input components
         JPanel inputPanel = new JPanel();
@@ -95,6 +95,36 @@ public class ExpensesIncomesTracker extends JFrame {
         pack();
         setVisible(true);
 
+    }
+
+    private void addEntry(){
+        String date  = dateField.getText();
+        String description = descriptionField.getText();
+        String amountStr = amountField.getText();
+        String type = (String) typeComboBox.getSelectedItem();
+        double amount;
+
+        if(amountStr.isEmpty()){
+            JOptionPane.showMessageDialog(this,"Please Enter Amount", "Error:", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            amount = Double.parseDouble(amountStr);
+        }
+        catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"Invalid Amount Format", "Error:", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if(type.equals("Expense")){
+            amount *=-1;
+        }
+
+        ExpenseIncomeEntry entry = new ExpenseIncomeEntry(date, description, amount, type);
+        tableModel.addEntry(entry);
+        balance += amount;
+        balanceLabel.setText("Balance: KES " +balance);
     }
 
 
