@@ -24,14 +24,14 @@ public class ExpensesIncomesTracker extends JFrame {
             System.err.println("Attempt to set FlatDarkLaf LookAndFeel unsuccessful");
         }
 
-        UIManager.put("TextField.foreground", Color.BLUE);
-        UIManager.put("TextField.background", Color.GRAY);
+        UIManager.put("TextField.foreground", Color.BLACK);
+        UIManager.put("TextField.background", Color.LIGHT_GRAY);
         UIManager.put("TextField.caretforeground", Color.RED);
         UIManager.put("ComboBox.foreground", Color.ORANGE);
         UIManager.put("ComboBox.selectionForeground", Color.LIGHT_GRAY);
         UIManager.put("ComboBox.selectionBackground", Color.BLACK);
         UIManager.put("Button.foreground", Color.WHITE);
-        UIManager.put("Button.background", Color.MAGENTA);
+        UIManager.put("Button.background", Color.BLUE);
         UIManager.put("Label.foreground", Color.WHITE);
 
         balance = 0.0;
