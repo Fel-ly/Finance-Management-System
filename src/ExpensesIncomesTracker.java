@@ -80,7 +80,7 @@ public class ExpensesIncomesTracker extends JFrame {
         inputPanel.add(addButton);
 
         // bottom panel  to display Balance
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(balanceLabel);
         setLayout(new BorderLayout());
 
@@ -108,7 +108,7 @@ public class ExpensesIncomesTracker extends JFrame {
 
         // validate amount input value
         if(amountStr.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Please Enter Amount", "Error:", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Amount field is required", "Error:", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
