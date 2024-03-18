@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Expense_Income_Tracker {
 
@@ -24,10 +21,12 @@ public class Expense_Income_Tracker {
                 System.out.println(resultSet.getDate(1) + " " + resultSet.getString(2) + " " + resultSet.getDouble(3));
             }
 
+
             connection.close();
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 }

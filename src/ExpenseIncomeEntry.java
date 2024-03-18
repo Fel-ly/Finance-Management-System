@@ -1,7 +1,7 @@
 // This class contains a representation of a single entry for expenses and incomes.
 public class ExpenseIncomeEntry {
 
-    private String date;
+    String date;
     private String description;
     private double amount;
     private String type; // expense or income
