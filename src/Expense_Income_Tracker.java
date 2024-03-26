@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Expense_Income_Tracker {
 
@@ -17,20 +16,25 @@ public class Expense_Income_Tracker {
     String username = "root";
     String password = "";
 
-
+    try {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
 
-
         // SQL statement to insert data into the Tracker table
-        String insertQuery = "INSERT INTO tracker (date, description, amount, type)" + "VALUES (?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO tracker (date, description, amount, type) VALUES (?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+
+        String date = null;
+        String description = null;
+        double amount = 0;
+        boolean type = false;
+
         preparedStatement.setString(1, date);
         preparedStatement.setString(2, description);
         preparedStatement.setDouble(3, amount);
         preparedStatement.setBoolean(4, type);
 
-        //execution of the insert statement
+        // execution of the insert statement
         int rowsAffected = preparedStatement.executeUpdate();
         if (rowsAffected > 0) {
             System.out.println("Data successfully inserted =) ");
@@ -40,6 +44,11 @@ public class Expense_Income_Tracker {
 
         statement.close();
         connection.close();
+
+    }
+    catch (SQLException e;) {
+        throw new RuntimeException(e);
+    }
 
     public static void main(String[] args) {
 
