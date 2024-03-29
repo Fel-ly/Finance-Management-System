@@ -7,7 +7,7 @@ public class ExpenseIncomeTableModel extends AbstractTableModel {
     // The list to store the entries' rows in the table
     private final List<ExpenseIncomeEntry> entries;
     //table column names
-    private final String[] columnNames = {"Date","Description","Amount","Type",};
+    private final String[] columnNames = {"Date","Description","Amount","Type"};
 
     public ExpenseIncomeTableModel(){
         entries = new ArrayList<>();
@@ -48,11 +48,20 @@ public class ExpenseIncomeTableModel extends AbstractTableModel {
                 return entry.getAmount();
             case 3:
                 return entry.getType();
+            case 4:
+                return calculateBalance(rowIndex);
             default:
                 return null;
         }
 
     }
 
+    private double calculateBalance(int rowIndex) {
+        double balance = 0;
+        for (int i = 0; i <= rowIndex; i++) {
+            balance += entries.get(i).getAmount();
+        }
+        return balance;
+    }
 
 }

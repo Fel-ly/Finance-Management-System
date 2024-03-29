@@ -232,6 +232,7 @@ public class ExpensesIncomesTracker extends JFrame {
 
         inputPanel.add(addButton);
 
+
         // bottom panel  to display Balance
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(balanceLabel);
@@ -292,10 +293,11 @@ public class ExpensesIncomesTracker extends JFrame {
             String password = "";
 
             Connection connection = DriverManager.getConnection(url, username, password);
+            connection.setAutoCommit(false); // Disable auto-commit to start a transaction
 
             String insertQuery = "INSERT INTO tracker (date, description, amount, type) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setString(1, date);
+            preparedStatement.setString(1, mysqlDate);
             preparedStatement.setString(2, description);
             preparedStatement.setDouble(3, amount);
             preparedStatement.setString(4, type);
@@ -303,16 +305,33 @@ public class ExpensesIncomesTracker extends JFrame {
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Data successfully inserted =)");
+
+                //update balance in the database
+                String updateBalanceQuery = "UPDATE  tracker SET balance = balance + ?";
+                PreparedStatement updateStatement = connection.prepareStatement(updateBalanceQuery);
+                updateStatement.setDouble(1, amount);
+                updateStatement.executeUpdate();
+
+                connection.commit(); // commit transaction
             } else {
                 System.out.println("Insertion failed =( ");
             }
 
             preparedStatement.close();
             connection.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error occurred while inserting data", "Error:", JOptionPane.ERROR_MESSAGE);
-            return;
         }
+        catch (SQLException e) {
+            e.printStackTrace(); // Print the stack trace for debugging
+            JOptionPane.showMessageDialog(this, "Error occurred while inserting data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                Connection connection = null;
+                connection.rollback(); // Rollback the transaction if an error occurs
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace(); // Print rollback exception for debugging
+            }
+            return; // Exit the method after handling the exception
+        }
+
 
         // Update table
         ExpenseIncomeEntry entry = new ExpenseIncomeEntry(date, description, amount, type);
