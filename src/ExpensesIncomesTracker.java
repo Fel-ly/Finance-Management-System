@@ -339,7 +339,7 @@ public class ExpensesIncomesTracker extends JFrame {
 
         // Update balance
         balance += amount;
-        balanceLabel.setText("Balance: KES " + balance);
+//        balanceLabel.setText("Balance: KES " + balance);
 
         // Clear input fields
         clearInputFields();
